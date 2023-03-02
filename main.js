@@ -1,11 +1,17 @@
 "use strict";
 
-const number = 10;
-
-for (let i = 0; i < number; i += 1) {
-  if (i % 2 === 0) {
-    continue;
+function checkForSpam(message) {
+  let result;
+  // Change code below this line
+  switch (message.toLowerCase()) {
+    case message.includes('spam') : result = true;
+      break;
+    case message.includes('sale') : result = true;
+      break;
+    default : result = true;
   }
-
-  console.log("Непарне i: ", i); // 1, 3, 5, 7, 9
+  // Change code above this line
+  return console.log(result) ;
 }
+
+checkForSpam('Get best sale offers now!')
