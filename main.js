@@ -1,20 +1,18 @@
 "use strict";
 
-function checkForSpam(message) {
-  let result;
+function getCommonElements(array1, array2) {
   // Change code below this line
-  switch (message.toLowerCase()) {
-    case message.includes("spam"):
-      result = true;
-      break;
-    case message.includes("sale"):
-      result = true;
-      break;
-    default:
-      result = true;
+  const arrayCommonElements = [];
+  for (let i = 0; i < array1.length; i++) {
+    for (let index = 0; index < array2.length; index++) {
+      if (array1[i] === array2[index]) {
+        arrayCommonElements.push(array1[i]);
+      }
+    }
   }
-  // Change code above this line
-  return console.log(result);
+  console.log(arrayCommonElements);
+
+ // Change code above this line
 }
 
-checkForSpam("Get best sale offers now!");
+getCommonElements([10, 20, 30, 40], [4, 30, 17, 10, 40])
