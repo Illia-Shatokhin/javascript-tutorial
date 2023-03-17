@@ -30,11 +30,40 @@ do {
 } while (nameIn !== userName || passwordIn !== userPassword);
 console.log("Ласкаво просимо!");
 let money = prompt("НА ЯКУ СУМУ ВИ РОЗРАХОВУЄТЕ? :");
+while (money < countriesPrice[0]) {
+  alert("На жаль у вас бракує коштів! Найдешевший відпочинок коштує 100$")
+  money= prompt("НА ЯКУ СУМУ ВИ РОЗРАХОВУЄТЕ? :");
+}
 for (const iterator in countriesPrice) {
   if (money >= countriesPrice[iterator]) {
     countriesForYou.push(countries[iterator]);
   }
 };
 alert(`Ви можете поїхати в: ${countriesForYou.join(", ")}!`);
-let choise = prompt("В ЯКУ КРАЇНУ ВИ ХОЧЕТЕ ВІДПРАВИТИСЬ? :");
-alert(`Тур сплачено! Збирайте речі до ${choise}! На вашому рахунку залишилось ${money - countriesPrice[countries.indexOf(choise)]} $`);
+do {
+  let choise = prompt("В ЯКУ КРАЇНУ ВИ ХОЧЕТЕ ВІДПРАВИТИСЬ? :");
+  for (const iterator of countriesForYou) {
+    while (choise === iterator) {
+      alert(`Тур сплачено! Збирайте речі до ${choise}! На вашому рахунку залишилось ${money - countriesPrice[countries.indexOf(choise)]} $`);
+      break;
+    }
+  }
+} while (true);
+// let choise = prompt("В ЯКУ КРАЇНУ ВИ ХОЧЕТЕ ВІДПРАВИТИСЬ? :");
+// for (const iterator of countriesForYou) {
+//   while (choise === iterator) {
+//     alert(`Тур сплачено! Збирайте речі до ${choise}! На вашому рахунку залишилось ${money - countriesPrice[countries.indexOf(choise)]} $`);
+//     break;
+//   }
+// }
+
+// do {
+//   let choise = prompt("В ЯКУ КРАЇНУ ВИ ХОЧЕТЕ ВІДПРАВИТИСЬ? :");
+//   for (const iterator of countriesForYou) {
+//     if (iterator === choise) {
+//       alert(`Тур сплачено! Збирайте речі до ${choise}! На вашому рахунку залишилось ${money - countriesPrice[countries.indexOf(choise)]} $`);
+//       break;
+//     }
+//   }
+// } while (choise);
+// alert(`Тур сплачено! Збирайте речі до ${choise}! На вашому рахунку залишилось ${money - countriesPrice[countries.indexOf(choise)]} $`);
