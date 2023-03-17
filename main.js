@@ -19,6 +19,7 @@ const countries = [
 
 const countriesPrice = [100, 200, 300, 400, 500, 600];
 
+// Реєстрація та логінізація
 let userName = prompt("ПРИДУМАЙТЕ ЛОГІН: ");
 let userPassword = prompt("ПРИДУМАЙТЕ ПАРОЛЬ: ");
 let nameIn = "";
@@ -29,17 +30,24 @@ do {
   passwordIn = prompt("ВВЕДІТЬ СВІЙ ПАРОЛЬ: ");
 } while (nameIn !== userName || passwordIn !== userPassword);
 console.log("Ласкаво просимо!");
-let money = prompt("НА ЯКУ СУМУ ВИ РОЗРАХОВУЄТЕ? :");
-while (money < countriesPrice[0]) {
-  alert("На жаль у вас бракує коштів! Найдешевший відпочинок коштує 100$")
-  money= prompt("НА ЯКУ СУМУ ВИ РОЗРАХОВУЄТЕ? :");
-}
+
+// Перевірка коштів
+let money;
+// Перевірка на число та чи достатньо коштів
+do {
+  money = prompt("НА ЯКУ СУМУ ВИ РОЗРАХОВУЄТЕ? :");
+  money = Number(money);
+} while (Number.isNaN(money) || money < countriesPrice[0]);
+// Створення масиву із країн в які можна поїхати
 for (const iterator in countriesPrice) {
   if (money >= countriesPrice[iterator]) {
     countriesForYou.push(countries[iterator]);
   }
 };
 alert(`Ви можете поїхати в: ${countriesForYou.join(", ")}!`);
+
+
+// Ваш вибір
 let choise = "";
 let experement = "";
 do {
