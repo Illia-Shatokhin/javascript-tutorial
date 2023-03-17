@@ -40,30 +40,15 @@ for (const iterator in countriesPrice) {
   }
 };
 alert(`Ви можете поїхати в: ${countriesForYou.join(", ")}!`);
+let choise = "";
+let experement = "";
 do {
-  let choise = prompt("В ЯКУ КРАЇНУ ВИ ХОЧЕТЕ ВІДПРАВИТИСЬ? :");
+  choise = prompt("В ЯКУ КРАЇНУ ВИ ХОЧЕТЕ ВІДПРАВИТИСЬ? :");
   for (const iterator of countriesForYou) {
-    while (choise === iterator) {
-      alert(`Тур сплачено! Збирайте речі до ${choise}! На вашому рахунку залишилось ${money - countriesPrice[countries.indexOf(choise)]} $`);
+    if (iterator === choise) {
+      experement = iterator;
       break;
     }
   }
-} while (true);
-// let choise = prompt("В ЯКУ КРАЇНУ ВИ ХОЧЕТЕ ВІДПРАВИТИСЬ? :");
-// for (const iterator of countriesForYou) {
-//   while (choise === iterator) {
-//     alert(`Тур сплачено! Збирайте речі до ${choise}! На вашому рахунку залишилось ${money - countriesPrice[countries.indexOf(choise)]} $`);
-//     break;
-//   }
-// }
-
-// do {
-//   let choise = prompt("В ЯКУ КРАЇНУ ВИ ХОЧЕТЕ ВІДПРАВИТИСЬ? :");
-//   for (const iterator of countriesForYou) {
-//     if (iterator === choise) {
-//       alert(`Тур сплачено! Збирайте речі до ${choise}! На вашому рахунку залишилось ${money - countriesPrice[countries.indexOf(choise)]} $`);
-//       break;
-//     }
-//   }
-// } while (choise);
-// alert(`Тур сплачено! Збирайте речі до ${choise}! На вашому рахунку залишилось ${money - countriesPrice[countries.indexOf(choise)]} $`);
+} while (experement !== choise);
+alert(`Тур сплачено! Збирайте речі до ${choise}! На вашому рахунку залишилось ${money - countriesPrice[countries.indexOf(choise)]} $`);
