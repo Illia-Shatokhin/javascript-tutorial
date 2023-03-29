@@ -37,8 +37,9 @@ const restaurants = [
 const services = {
   showMenu() {
     const chosenMenu = this.getMenu();
+    console.log("МЕНЮ:");
     for (const key in chosenMenu) {
-      console.log(`страва: ${key} - коштує: ${chosenMenu[key]}`);
+      console.log(`${key} --------- ${chosenMenu[key]} грн`);
     }
     this.addOrder()
   },
@@ -53,17 +54,12 @@ const services = {
     let total = 0;
     if (order === null) {
       this.confirmOrder();
-    // } else if(torpedaDelivery.order.length === 0) {
-    //   alert('Ви нічого не замовили! Почніть знову...');
-    //   torpedaDelivery.chooseRestaurant();
     }
     else {
       torpedaDelivery.order.push(order);
       torpedaDelivery.total += this.getMenu()[order];
       this.addOrder();
     }
-    // torpedaDelivery.order.push(prompt('Виберіть страву'));
-    // console.log(torpedaDelivery.order);
   },
   confirmOrder() {
     if (torpedaDelivery.order.length === 0) {
@@ -90,6 +86,9 @@ const torpedaDelivery = {
   chooseRestaurant() {
     const brands = this.getAvailableRestaurants();
     this.chosenRestaurant = prompt(`Виберіть ресторан: ${brands.join(", ")}`);
+    if (this.chosenRestaurant === "" || this.chosenRestaurant === null) {
+      alert("Ви не вибрали ресторан! Перезавантажте сторінку")
+    }
     services.showMenu();
   },
   chooseDishes() {},
