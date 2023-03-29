@@ -1,62 +1,98 @@
-"use strict";
+// Домашка: "Delivery"
+// Ви пропонуєте користувачу список доступних ресторанів для замовлення їжі.
+// Користувач обирає конкретний ресторан і отримує список доступних пунктів в меню для замовлення із вказанням їх вартості.
+// Користувач обирає своє замовлення, після чого має отримати його підтвердження та основну інформацію: 
+// "що замовив, вартість та час доставки".
 
-// Замовлення турів:
-// Пишемо реєстрацію користувача за допомогою prompt.  Окремо логін та пароль. Валідацію не потрібно робити.
-// Аналогічно пишемо логінізацію: запитуємо логін та пароль, порівнюємо їх з даними, які були введені при реєстрації. 
-// Якщо все вірно - виводимо в консоль, що логін успішний. Якщо ні - знову запитуємо логін та пароль.
-// Запитуємо максимальну суму, яку готовий витратити користувач на тур.
-// Виводимо список усіх країн в alert, які доступні по сумі для користувача.
-// Вказуємо країну через prompt  і купляємо тур.
-// Виводимо повідомлення, що тур оплачений і залишок на рахунку користувача.
-const countries = [
-  "Ukraine",
-  "Poland",
-  "Croatia",
-  "Montenegro",
-  "France",
-  "USA",
+const restaurants = [
+  {
+    order: [],
+    brand: "KFC",
+    menu: {
+      chicken: 50,
+      burger: 50,
+    },
+    deliveryTime: 60,
+  },
+  {
+    order: [],
+    brand: "mcDonalds",
+    menu: {
+      cola: 25,
+      burger: 30,
+    },
+    deliveryTime: 30,
+  },
+  {
+    order: [],
+    brand: "Burger King",
+    menu: {
+      burgerXXL: 170,
+      burger: 70,
+    },
+    deliveryTime: 20,
+  },
 ];
 
-const countriesPrice = [100, 200, 300, 400, 500, 600];
-
-// Реєстрація та логінізація
-let userName = prompt("ПРИДУМАЙТЕ ЛОГІН: ");
-let userPassword = prompt("ПРИДУМАЙТЕ ПАРОЛЬ: ");
-let nameIn = "";
-let passwordIn = "";
-const countriesForYou = [];
-do {
-  nameIn = prompt("ВВЕДІТЬ СВІЙ ЛОГІН: ");
-  passwordIn = prompt("ВВЕДІТЬ СВІЙ ПАРОЛЬ: ");
-} while (nameIn !== userName || passwordIn !== userPassword);
-console.log("Ласкаво просимо!");
-
-// Перевірка коштів
-let money;
-// Перевірка на число та чи достатньо коштів
-do {
-  money = prompt("НА ЯКУ СУМУ ВИ РОЗРАХОВУЄТЕ? :");
-  money = Number(money);
-} while (Number.isNaN(money) || money < countriesPrice[0]);
-// Створення масиву із країн в які можна поїхати
-for (const iterator in countriesPrice) {
-  if (money >= countriesPrice[iterator]) {
-    countriesForYou.push(countries[iterator]);
-  }
-};
-alert(`Ви можете поїхати в: ${countriesForYou.join(", ")}!`);
-
-
-// Ваш вибір
-let choise = "";
-let experement = "";
-do {
-  choise = prompt("В ЯКУ КРАЇНУ ВИ ХОЧЕТЕ ВІДПРАВИТИСЬ? :");
-  for (const iterator of countriesForYou) {
-    if (iterator === choise) {
-      experement = iterator;
-      break;
+const services = {
+  showMenu() {
+    const chosenMenu = this.getMenu();
+    for (const key in chosenMenu) {
+      console.log(`страва: ${key} - коштує: ${chosenMenu[key]}`);
     }
-  }
-} while (experement !== choise);
-alert(`Тур сплачено! Збирайте речі до ${choise}! На вашому рахунку залишилось ${money - countriesPrice[countries.indexOf(choise)]} $`);
+    this.addOrder()
+  },
+  getRestourant() {
+    return restaurants.find(el => el.brand === torpedaDelivery.chosenRestaurant)
+  },
+  getMenu() {
+    return this.getRestourant().menu;
+  },
+  addOrder() {
+    const order = prompt('Виберіть страву');
+    let total = 0;
+    if (order === null) {
+      this.confirmOrder();
+    // } else if(torpedaDelivery.order.length === 0) {
+    //   alert('Ви нічого не замовили! Почніть знову...');
+    //   torpedaDelivery.chooseRestaurant();
+    }
+    else {
+      torpedaDelivery.order.push(order);
+      torpedaDelivery.total += this.getMenu()[order];
+      this.addOrder();
+    }
+    // torpedaDelivery.order.push(prompt('Виберіть страву'));
+    // console.log(torpedaDelivery.order);
+  },
+  confirmOrder() {
+    if (torpedaDelivery.order.length === 0) {
+        alert('Ви нічого не замовили! Почніть знову...');
+        torpedaDelivery.chooseRestaurant();
+    } else {
+        const time = this.getRestourant().deliveryTime;
+        alert(`Ваше замовлення складається з ${torpedaDelivery.order.join(", ")} на суму ${torpedaDelivery.total}. Чекайте на замовлення через ${time} хвилин`);
+        this.getRestourant().order.push(torpedaDelivery.order);
+        console.table(restaurants);
+        torpedaDelivery.order = [];
+        torpedaDelivery.chooseRestaurant();
+    }
+  },
+};
+
+const torpedaDelivery = {
+  order: [],
+  total: 0,
+  chosenRestaurant: "",
+  getAvailableRestaurants() {
+    return restaurants.map(el => el.brand)
+  },
+  chooseRestaurant() {
+    const brands = this.getAvailableRestaurants();
+    this.chosenRestaurant = prompt(`Виберіть ресторан: ${brands.join(", ")}`);
+    services.showMenu();
+  },
+  chooseDishes() {},
+};
+
+torpedaDelivery.chooseRestaurant();
