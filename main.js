@@ -67,7 +67,7 @@ const services = {
         torpedaDelivery.chooseRestaurant();
     } else {
         const time = this.getRestourant().deliveryTime;
-        alert(`Ваше замовлення складається з ${torpedaDelivery.order.join(", ")} на суму ${torpedaDelivery.total}. Чекайте на замовлення через ${time} хвилин`);
+        alert(`Ваше замовлення складається з ${torpedaDelivery.order.join(", ")} на суму ${torpedaDelivery.total} грн. Чекайте на замовлення через ${time} хвилин`);
         this.getRestourant().order.push(torpedaDelivery.order);
         console.table(restaurants);
         torpedaDelivery.order = [];
