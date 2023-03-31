@@ -1,8 +1,8 @@
-// // Домашка: "Delivery"
-// // Ви пропонуєте користувачу список доступних ресторанів для замовлення їжі.
-// // Користувач обирає конкретний ресторан і отримує список доступних пунктів в меню для замовлення із вказанням їх вартості.
-// // Користувач обирає своє замовлення, після чого має отримати його підтвердження та основну інформацію: 
-// // "що замовив, вартість та час доставки".
+// Домашка: "Delivery"
+// Ви пропонуєте користувачу список доступних ресторанів для замовлення їжі.
+// Користувач обирає конкретний ресторан і отримує список доступних пунктів в меню для замовлення із вказанням їх вартості.
+// Користувач обирає своє замовлення, після чого має отримати його підтвердження та основну інформацію: 
+// "що замовив, вартість та час доставки".
 
 const restaurants = [
   {
@@ -69,22 +69,24 @@ const services = {
         alert('Ви нічого не замовили! Почніть знову...');
         console.clear();
         torpedaDelivery.chooseRestaurant();
-    } 
-    let conf = confirm(`Ваше замовлення складається з ${torpedaDelivery.order.join(", ")} на суму ${torpedaDelivery.total} грн. Все правильно?`)
-    if (conf) {
-      const time = this.getRestourant().deliveryTime;
-      alert(`Чекайте на замовлення через ${time} хвилин`);
-      this.getRestourant().order.push(torpedaDelivery.order);
-      console.table(restaurants);
-      torpedaDelivery.order = [];
-      torpedaDelivery.total = 0;
-      torpedaDelivery.chooseRestaurant();
+    } else {
+      let conf = confirm(`Ваше замовлення складається з ${torpedaDelivery.order.join(", ")} на суму ${torpedaDelivery.total} грн. Все правильно?`)
+      if (conf) {
+        const time = this.getRestourant().deliveryTime;
+        alert(`Чекайте на замовлення через ${time} хвилин`);
+        this.getRestourant().order.push(torpedaDelivery.order);
+        console.table(restaurants);
+        torpedaDelivery.order = [];
+        torpedaDelivery.total = 0;
+        torpedaDelivery.chooseRestaurant();
+      } else {
+        alert("Почніть, будь ласка, спочатку");
+        console.clear();
+        torpedaDelivery.order = [];
+        torpedaDelivery.total = 0;
+        torpedaDelivery.chooseRestaurant();
+      }
     }
-      alert("Почніть, будь ласка, спочатку");
-      console.clear();
-      torpedaDelivery.order = [];
-      torpedaDelivery.total = 0;
-      torpedaDelivery.chooseRestaurant();
   },
 };
 
@@ -101,6 +103,7 @@ const torpedaDelivery = {
     const hasBrandChosenRestourant = brands.some(el => el === this.chosenRestaurant)
     if (this.chosenRestaurant === "" || this.chosenRestaurant === null) {
       alert("Ви не вибрали ресторан! Перезавантажте сторінку")
+      return
     } else if (hasBrandChosenRestourant) {
       services.showMenu();
     } else {
