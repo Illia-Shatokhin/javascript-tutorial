@@ -1,8 +1,8 @@
-// Домашка: "Delivery"
-// Ви пропонуєте користувачу список доступних ресторанів для замовлення їжі.
-// Користувач обирає конкретний ресторан і отримує список доступних пунктів в меню для замовлення із вказанням їх вартості.
-// Користувач обирає своє замовлення, після чого має отримати його підтвердження та основну інформацію: 
-// "що замовив, вартість та час доставки".
+// // Домашка: "Delivery"
+// // Ви пропонуєте користувачу список доступних ресторанів для замовлення їжі.
+// // Користувач обирає конкретний ресторан і отримує список доступних пунктів в меню для замовлення із вказанням їх вартості.
+// // Користувач обирає своє замовлення, після чого має отримати його підтвердження та основну інформацію: 
+// // "що замовив, вартість та час доставки".
 
 const restaurants = [
   {
@@ -52,27 +52,38 @@ const services = {
   addOrder() {
     const order = prompt('Виберіть страву');
     let total = 0;
+    let hasMenuOrder = Object.keys(this.getMenu()).some(el => el === order);
     if (order === null) {
       this.confirmOrder();
-    }
-    else {
+    } else if(hasMenuOrder) {
       torpedaDelivery.order.push(order);
       torpedaDelivery.total += this.getMenu()[order];
+      this.addOrder();
+    } else {
+      alert('На жаль такого в нашому меню ще немає');
       this.addOrder();
     }
   },
   confirmOrder() {
     if (torpedaDelivery.order.length === 0) {
         alert('Ви нічого не замовили! Почніть знову...');
+        console.clear();
         torpedaDelivery.chooseRestaurant();
-    } else {
-        const time = this.getRestourant().deliveryTime;
-        alert(`Ваше замовлення складається з ${torpedaDelivery.order.join(", ")} на суму ${torpedaDelivery.total} грн. Чекайте на замовлення через ${time} хвилин`);
-        this.getRestourant().order.push(torpedaDelivery.order);
-        console.table(restaurants);
-        torpedaDelivery.order = [];
-        torpedaDelivery.chooseRestaurant();
+    } 
+    let conf = confirm(`Ваше замовлення складається з ${torpedaDelivery.order.join(", ")} на суму ${torpedaDelivery.total} грн. Все правильно?`)
+    if (conf) {
+      const time = this.getRestourant().deliveryTime;
+      alert(`Чекайте на замовлення через ${time} хвилин`);
+      this.getRestourant().order.push(torpedaDelivery.order);
+      console.table(restaurants);
+      torpedaDelivery.order = [];
+      torpedaDelivery.chooseRestaurant();
     }
+      alert("Почніть, будь ласка, спочатку");
+      console.clear();
+      torpedaDelivery.order = [];
+      torpedaDelivery.total = 0;
+      torpedaDelivery.chooseRestaurant();
   },
 };
 
@@ -86,12 +97,100 @@ const torpedaDelivery = {
   chooseRestaurant() {
     const brands = this.getAvailableRestaurants();
     this.chosenRestaurant = prompt(`Виберіть ресторан: ${brands.join(", ")}`);
+    const hasBrandChosenRestourant = brands.some(el => el === this.chosenRestaurant)
     if (this.chosenRestaurant === "" || this.chosenRestaurant === null) {
       alert("Ви не вибрали ресторан! Перезавантажте сторінку")
+    } else if (hasBrandChosenRestourant) {
+      services.showMenu();
+    } else {
+      alert ("З цим рестораном ми, поки що, не працюємо");
+      torpedaDelivery.chooseRestaurant();
     }
-    services.showMenu();
   },
   chooseDishes() {},
 };
 
 torpedaDelivery.chooseRestaurant();
+
+
+
+
+
+
+
+
+
+// function sameCase(a, b){
+//   let isNullA = a.match(/[a-z]/i);
+//   let isNullB = b.match(/[a-z]/i);
+//   if (isNullA !== null) {
+//     isNullA = isNullA[0]
+//   }
+//   if (isNullB !== null) {
+//     isNullB = isNullB[0]
+//   }
+//   if (isNullA === a && isNullB === b) {
+//     if (a.toUpperCase() === a) {
+//       if(b.toUpperCase() === b) {
+//         return 1;
+//       }
+//       return 0;
+//     }
+//     if(b.toUpperCase() === b) {
+//       return 0;
+//     }
+//     return 1;
+//   } return -1;
+// //   return 0;
+// }
+
+// console.log(sameCase("a", "B"));
+// console.log(sameCase("A", "b"));
+// console.log(sameCase("a", "b"));
+// console.log(sameCase("A", "A"));
+// console.log(sameCase("#", "B"));
+// console.log(sameCase("a", "?"));
+
+// function XO(str) {
+  //code here
+  // const xCount = str.toLowerCase().split("").filter(el => el === "x")
+  // const oCount = str.toLowerCase().split("").filter(el => el === "o")
+  // console.log(xCount);
+  // console.log(oCount);
+  // if (xCount.length === oCount.length) {
+  //   return true;
+  // }
+  // return false
+// }
+// XO("xxxXsdooOO");
+
+// function printerError(s) {
+//   // your code
+//   let colors = /[a-m]/;
+//   let errorArray = s.split("").filter(el => !colors.test(el));
+//   return `${errorArray.length}/${s.length}`
+// }
+// console.log(printerError("aaabbbbhaijjjm")); // 0/14
+// console.log(printerError("aaaxbbbbyyhwawiwjjjwwm")); // 8/22
+
+// const printerError = s => `${s.replace(/[a-m]/gi, "").length}/${s.length}`;
+
+// function getMiddle(s)
+// {
+//   //Code goes here!
+  
+//   if (s.length % 2 === 0) {
+//     return s.slice(s.length / 2 - 1, s.length / 2 + 1)
+//   }
+//   return s.slice(s.length / 2 - 0.5, s.length / 2 + 0.5)
+// }
+
+// console.log(getMiddle("test")) // should return "es"
+
+// console.log(getMiddle("testing")) // should return "t"
+
+// console.log(getMiddle("middle")) // should return "dd"
+
+// console.log(getMiddle("A")) // should return "A"
+
+// const productName = "Repair droid";
