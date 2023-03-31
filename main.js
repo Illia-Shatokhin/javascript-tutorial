@@ -77,6 +77,7 @@ const services = {
       this.getRestourant().order.push(torpedaDelivery.order);
       console.table(restaurants);
       torpedaDelivery.order = [];
+      torpedaDelivery.total = 0;
       torpedaDelivery.chooseRestaurant();
     }
       alert("Почніть, будь ласка, спочатку");
@@ -104,7 +105,7 @@ const torpedaDelivery = {
       services.showMenu();
     } else {
       alert ("З цим рестораном ми, поки що, не працюємо");
-      torpedaDelivery.chooseRestaurant();
+      this.chooseRestaurant();
     }
   },
   chooseDishes() {},
