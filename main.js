@@ -243,4 +243,4 @@ stopBtn.addEventListener("click", () => {
   console.log(`Interval with id ${timerId} has stopped!`);
 });
 
-// Перевірка змін після пушу з вс код!!!
+// Перевірка змін після пушу з вс код!!
